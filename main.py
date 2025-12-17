@@ -2,15 +2,13 @@ import argparse
 import sys
 from pathlib import Path
 from PyPDF2 import PdfMerger
+import os
+from tqdm import tqdm
 
-try:
-    from tqdm import tqdm
-except ImportError:
-    # Fallback if tqdm is not installed
-    def tqdm(iterable, desc=None, unit=None):
-        if desc:
-            print(desc)
-        return iterable
+def tqdm(iterable, desc=None, unit=None):
+    if desc:
+        print(desc)
+    return iterable
 
 def validate_paths(pdf_folder, order_file):
     if not pdf_folder.exists():
@@ -85,7 +83,8 @@ def main():
     parser.add_argument("--output", type=Path, default=Path("merged_output.pdf"), help="Output filename")
     
     args = parser.parse_args()
-    
+
+    os.makedirs(args.folder, exist_ok=True)
     merge_pdfs(args.folder, args.order, args.output)
 
 if __name__ == "__main__":
