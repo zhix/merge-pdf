@@ -26,5 +26,8 @@ wheels/
 venv/
 ENV/
 
+*.pdf
+*/*.pdf
+
 # Project specific
 merged_output.pdf
